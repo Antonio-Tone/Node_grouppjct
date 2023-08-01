@@ -1,0 +1,39 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="/public/styling.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Weather App</h1>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Enter city name">
+      <button onclick="searchWeather()">Search</button>
+    </div>
+    <div class="weather-info" id="weather-info">
+      <!-- Weather information will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    async function searchWeather() {
+      const city = document.getElementById('search-input').value;
+      const response = await fetch(`/weather?city=${city}`);
+      const data = await response.json();
+
+      // Update the weather information in the DOM
+      const weatherInfo = document.getElementById('weather-info');
+      weatherInfo.innerHTML = `
+        <p><strong>City:</strong> ${data.city}</p>
+        <p><strong>Temperature:</strong> ${data.temperature}°C</p>
+        <p><strong>Description:</strong> ${data.description}</p>
+        <p><strong>Humidity:</strong> ${data.humidity}%</p>
+        <p><strong>Wind Speed:</strong> ${data.windSpeed} km/h</p>
+      `;
+    }
+  </script>
+</body>
+</html>
